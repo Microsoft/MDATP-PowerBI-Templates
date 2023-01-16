@@ -353,14 +353,14 @@ Function GetTimeRangeOfVersion() {
   foreach ($version in $versions) {
     if ($null -eq $installTime)
     {
-        $lgp_events = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | where {$_.Id -eq 2000 -and $_.Message -like "*Current security intelligence Version: $($version)*"}
+        $lgp_events = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | where {$_.Id -eq 2000 -and $_.Properties[2].Value -like $version}
         if ($lgp_events)
         {
             $installTime =  @($lgp_events[0]).TimeCreated
             $foundVersion = $version
         }
     }
-    $rgp_events = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | where {$_.Id -eq 2000 -and $_.Message -like "*Previous security intelligence Version: $($version)*"}
+    $rgp_events = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | where {$_.Id -eq 2000 -and $_.Properties[3].Value -like $version}
    if ($rgp_events)
     {
         $removalTime =  @($rgp_events[0]).TimeCreated
