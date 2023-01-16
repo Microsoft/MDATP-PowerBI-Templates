@@ -84,7 +84,8 @@ Function LogErrorAndConsole($message) {
 Function CopyAclFromOwningDir($path) {
     $base_path = Split-Path -Path $path
     $acl = Get-Acl $base_path
-	$group = New-Object System.Security.Principal.NTAccount("Builtin", "Administrators")
+    	$groupname = Get-LocalGroup -SID 'S-1-5-32-544' | Select-Object -ExpandProperty Name
+	$group = New-Object System.Security.Principal.NTAccount("Builtin", $groupname)
 	$acl.SetOwner($group)
     Set-Acl $path $acl
 }
