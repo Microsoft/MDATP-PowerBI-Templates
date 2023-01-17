@@ -94,6 +94,8 @@ $programs = @{
     "Microsoft Teams"              = "msteams.exe"
     "PuTTY"                        = "putty.exe"
     "wordpad"                      = "WORDPAD.EXE"
+    "Cubase 9"                     = "cubase9.exe"
+    "Cubase 11"                    = "cubase11.exe"
 }
 
 $LogFileName = [string]::Format("ShortcutRepairs{0}.log", (Get-Random -Minimum 0 -Maximum 99))
