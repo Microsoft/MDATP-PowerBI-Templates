@@ -202,7 +202,7 @@ Security updates management options are enumerated in [Manage how and where Micr
 
 15.	**How to recover deleted links using remote management tools**\
     To restore Start shortcuts, run following script on impacted devices.
-https://github.com/microsoft/MDE-PowerBI-Templates/blob/master/ASR_scripts/AddShortcutsV1.ps1
+https://github.com/microsoft/MDE-PowerBI-Templates/blob/master/ASR_scripts/AddShortcuts.ps1
 **Note: This script must be run in elevated mode (either admin or system).**
 
     To include additional programs into the script: edit the $program variable and add a new line with the name of the application .lnk and the executable. 
