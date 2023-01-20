@@ -70,6 +70,7 @@ $programs = @{
     "[Adobe Illustrator]"          = "illustrator.exe"
     "Adobe Creative Cloud"         = "Creative Cloud.exe"
     "Adobe Substance 3D Painter"   = "Adobe Substance 3D Painter.exe"
+    "Cinema 4D"                    = "Cinema 4D.exe"
     "Firefox Private Browsing"     = "private_browsing.exe"
     "Firefox"                      = "firefox.exe"
     "Google Chrome"                = "chrome.exe"
@@ -84,6 +85,7 @@ $programs = @{
     "Visual Studio Code"           = "code.exe"
     "Camtasia Studio"              = "CamtasiaStudio.exe"
     "Camtasia Recorder"            = "CamtasiaRecorder.exe"
+    "OBS Studio"                   = "obs64.exe"
     "Jabra Direct"                 = "jabra-direct.exe"
     "7-Zip File Manager"           = "7zFM.exe"
     "Access"                       = "MSACCESS.EXE"
@@ -111,6 +113,10 @@ $programs = @{
     "[CORSAIR iCUE Software]"      = "iCue.exe"
     "[Steam]"                      = "steam.exe"
     "Paint"                        = "mspaint.exe"
+    "MobaXterm"                    = "MobaXterm.exe"
+    "[AutoCAD LT]"                 = "acadlt.exe"
+    "[Rhino]"                      = "Rhino.exe"
+    "[Ultimaker Cura]"             = "Ultimaker-Cura.exe"
 }
 
 $LogFileName = [string]::Format("ShortcutRepairs{0}.log", (Get-Random -Minimum 0 -Maximum 99))
