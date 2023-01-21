@@ -9,9 +9,16 @@ Then read the Frequently Asked Questions (FAQ) here: https://aka.ms/ASR_shortcut
 This repo contains information about the following scripts:
 * AddShortcuts.ps1 - PowerShell script that attempts to restore impacted shortcuts based on information retrieved from VSS (shadow copy) and registry
 * MpRecoverTaskbar.exe - Executable that attempts to restore taskbar links and libraries based on information retrieved from the registry
-* ASROfficeWin32IsSystemImpacted.ps1 - PowerShell script that checks based on available logs and events if a machine has been impacted by this issue
 
-**Note:**  All of these scripts are signed by Microsoft
+**_NOTE:_**  All of these scripts are signed by Microsoft
+
+**_NOTE:_**  Please be aware of the following known limitations (all versions):
+- Applications that have multiple paths (separated by a ;) in ``` SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths ``` are not currently supported.
+- This script will create shortcuts in the Start Menu and not in a sub folder.  This may result in the creation of duplicate Start Menu items.  The script will not restore the items in a custom layout group.
+- This script does not recreate links for UWP apps\WindowsApps
+- This script may not recreate pinned Quick Launch or Start Menu items if they are not available in VSS.
+- This script may not recreate links for Visual Studio (devenv.exe)
+
 
 ## AddShortCuts.ps1
 This script provides a variety of techniques that can help recover links.
@@ -55,7 +62,6 @@ $programs = @{
     "[Adobe Illustrator]"          = "illustrator.exe"
     ...
 ```
-
 **Important:** ```$programs``` table is a key=value pair, with [] used to denote programs that have version year info, like [Visual Studio]. For such entries with [], we will lookup file description in file version info and use that, if it does not exist, we will fallback using generic name.
 
 ### Best effort to trigger RunOnce of MpRecoverTaskbar.exe 
@@ -80,14 +86,11 @@ If the script discovers VSS (shadow copy), then the shadow copies are mounted, a
 ### Saving Results (Optional) 
 For information about this tool, including data it stores to understand effectiveness, go to https://aka.ms/ASR_shortcuts_deletion_FAQ
 
-### Best effort to trigger run once of MpRecoverTaskbar.exe (Optional)
-The ```MpRecoverTaskbar.exe``` is added as a RunOnce to all users and there is a best effort attempt to run the .exe when the script runs.  If the script is unsuccessful, then the .exe will run the next time the user logs in.
-
-
 ### Release History
 
 | Version | Date    | Details | Link |
 | ------- | ------- | ----------- | ------|
+|  v5     | 01/20/2023 | <li>Improved error handling to ensure that RunOnce get run when a logged off user logs back in<li>||
 |  v4     | 01/18/2023 | <li>```-ForceRepair``` is ```$true``` by default</li><li>Minor bug fixes</li> | https://aka.ms/ASRAddShortcuts |
 |  v3     | 01/17/2023 |<li>Improved VSS recovery to restore .lnk files into Startup, Desktop, and Quick Launch.</li><li>Updated VSS recovery logic to look for shadow copies before '2023-01-13T06:04:45.000Z' on using the -ForceRepair option.</li><li>Enhanced support for localization - fixed bug where ACL didn't work outside of EN-US</li><li>Updated tool messages for better clarity & detail</li><li>Runs in User Context</li>   | https://aka.ms/ASRAddShortcutsv3 |
 |  v2     | 01/16/2023 | <li>Volume Shadow Copy (VSS) Recovery is attempted by Default</li><li>Improvements to also recover Favorite URLs to Favorites & Desktop</li><li>Handling for Server SKU to skip the run as there was no impact</li><li>Better handling on non-english language systems</li>| https://aka.ms/ASRAddShortcutsv2 |
@@ -101,6 +104,10 @@ The ```MpRecoverTaskbar.exe``` is added as a RunOnce to all users and there is a
 ## MpRecoverTaskbar.exe
 Tool to try recovering taskbar shortcuts (.lnk) and library links.
 
+- The tool restores Windows Library shortcuts for 6 known folders.
+- The tool restores pinned taskbar shortcuts for win32 apps.
+- Per profile pinned shortcuts are only supported for MsEdge and Chrome apps.
+
 ### Usage
 ```
 CMD (non-admin)
@@ -113,6 +120,8 @@ MpRecoverTaskbar.exe [-v] [--notelemetry] [--force] [--forcerepair] [-?]
 --force        Force to rerun the tool on the same device.
 -?             Display usage without running the tool.
 ```
+
+
 ### Release History
 | Version |Date | Details | Microsoft Download Center Link |
 |-----    |-----|------   |-----                           |
@@ -122,17 +131,6 @@ MpRecoverTaskbar.exe [-v] [--notelemetry] [--force] [--forcerepair] [-?]
 ### Notes
 **#1:** Logs will be saved to ```%temp%\MpRecoverTaskBar-xxxx_x_x_x_x_x*.log``` 
 
-## ASROfficeWin32IsSystemImpacted.ps1
-Script to detect impact on a machine using security intelligence update (SIU aka signature definitions) versions installed and time range, and *any* events logged.
-
-### Release History
-Version | Date    | Details | Link |
-| ------- | ------- | ----------- | ------|
-| v1      |  01/16/2023 | Initial Release | https://aka.ms/ASRTestImpact |
-
-### Notes
-**#1:** The logic depends on Windows Event entries that contain the 3 impacted SIU versions. However, those events get rotated, especially as days pass, so you may see entries like 'Machine was not impacted by ASR rule' or 'Machine didn't get affected' respectively for the scripts. The ForceRepair parameter is for that purpose.
-
 # Deployment options
 Here are a couple of deployment tools that can be used to push out the PowerShell script (AddShortcuts.ps1) and/or .exe's (MpRecoverTaskbar.exe).
 * Intune (MEM, MDM) http://aka.ms/RestoreShortcuts-Intune
@@ -140,7 +138,7 @@ Here are a couple of deployment tools that can be used to push out the PowerShel
 
 # How to check if your Windows 10 or Windows 11 machines are still running the impacted SIU:
 In Advanced Hunting, you are able to run the following Advanced Hunting (AH) query to see if any of your devices require an updated version of the SIU: 
-https://github.com/microsoft/MDE-PowerBI-Templates/blob/master/ASR_AdvancedHunting/Check_what_machines_have_the_bad_signatures
+[Check what machines have the bad signatures](../ASR_AdvancedHunting/Check_what_machines_have_the_bad_signatures)
 
 Once you confirm that the devices have an updated SIU, you can move the ASR Rules - “Block Win32 API calls from Office macro” rule to **block mode**.
 
