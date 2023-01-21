@@ -125,8 +125,9 @@ MpRecoverTaskbar.exe [-v] [--notelemetry] [--force] [--forcerepair] [-?]
 ### Release History
 | Version |Date | Details | Microsoft Download Center Link |
 |-----    |-----|------   |-----                           |
-|   v2    | 01/17/2022 | <li>If you are using System Center Config Manager or Group Policy Object Editor or third-party tools then deploy both files and run the command “powershell -ep bypass -file .\AddShortcuts.ps1 -MpTaskBarRecoverUtilLocal” as Administrator.</li><li>The changes will come into effect after users logout and login to their accounts.</li><li>The MPRecoverTaskbar.exe can be run multiple times on end-user machines if necessary.  If end-users are missing taskbar icons after completing this process, then try running it a second time from %windir%\MPRecoverTaskbar.exe in the user context.</li><li>The name of the .exe is now MpRecoverTaskbar.exe. </li>|https://aka.ms/ASRTaskBarRepairTool|
-|   v1   |  01/16/2022 | <li>Needs to run in user context (non-admin).</li><li>The name of the .exe is MpTaskBarRecovery.exe</li>| ?  |
+|   v3    | 01/20/2022 | <li> Now support restoring Chrome and Edge per profile pinned taskbar shortcuts.  For instructions, please see the v2 details below. </li>|https://aka.ms/ASRTaskBarRepairTool|
+|   v2    | 01/17/2022 | <li>If you are using System Center Config Manager or Group Policy Object Editor or third-party tools then deploy both files and run the command “powershell -ep bypass -file .\AddShortcuts.ps1 -MpTaskBarRecoverUtilLocal” as Administrator.</li><li>The changes will come into effect after users logout and login to their accounts.</li><li>The MPRecoverTaskbar.exe can be run multiple times on end-user machines if necessary.  If end-users are missing taskbar icons after completing this process, then try running it a second time from %windir%\MPRecoverTaskbar.exe in the user context.</li><li>The name of the .exe is now MpRecoverTaskbar.exe. </li>|<Removed>|
+|   v1   |  01/16/2022 | <li>Needs to run in user context (non-admin).</li><li>The name of the .exe is MpTaskBarRecovery.exe</li>| <Removed>  |
 
 ### Notes
 **#1:** Logs will be saved to ```%temp%\MpRecoverTaskBar-xxxx_x_x_x_x_x*.log``` 
