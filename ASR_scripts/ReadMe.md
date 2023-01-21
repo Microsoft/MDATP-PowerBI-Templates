@@ -136,6 +136,7 @@ MpRecoverTaskbar.exe [-v] [--notelemetry] [--force] [--forcerepair] [-?]
 Here are a couple of deployment tools that can be used to push out the PowerShell script (AddShortcuts.ps1) and/or .exe's (MpRecoverTaskbar.exe).
 * Intune (MEM, MDM) http://aka.ms/RestoreShortcuts-Intune
 * System Center Configuration Manager (SCCM, MEMCM) https://aka.ms/RestoreShortcuts-SCCM
+* Group Policy Preference (GPP) https://aka.ms/AddShortcuts_with_GPP
 
 # How to check if your Windows 10 or Windows 11 machines are still running the impacted SIU:
 In Advanced Hunting, you are able to run the following Advanced Hunting (AH) query to see if any of your devices require an updated version of the SIU: 
