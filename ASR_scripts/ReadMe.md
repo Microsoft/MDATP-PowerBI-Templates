@@ -90,8 +90,8 @@ For information about this tool, including data it stores to understand effectiv
 
 | Version | Date    | Details | Link |
 | ------- | ------- | ----------- | ------|
-|  v5     | 01/20/2023 | <li>Improved error handling to ensure that RunOnce get run when a logged off user logs back in<li>||
-|  v4     | 01/18/2023 | <li>```-ForceRepair``` is ```$true``` by default</li><li>Minor bug fixes</li> | https://aka.ms/ASRAddShortcuts |
+|  v5     | 01/20/2023 | <li>Improved error handling to ensure that RunOnce get run when a logged off user logs back in</li>| https://aka.ms/ASRAddShortcuts |
+|  v4     | 01/18/2023 | <li>```-ForceRepair``` is ```$true``` by default</li><li>Minor bug fixes</li> | https://aka.ms/ASRAddShortcutsv4 |
 |  v3     | 01/17/2023 |<li>Improved VSS recovery to restore .lnk files into Startup, Desktop, and Quick Launch.</li><li>Updated VSS recovery logic to look for shadow copies before '2023-01-13T06:04:45.000Z' on using the -ForceRepair option.</li><li>Enhanced support for localization - fixed bug where ACL didn't work outside of EN-US</li><li>Updated tool messages for better clarity & detail</li><li>Runs in User Context</li>   | https://aka.ms/ASRAddShortcutsv3 |
 |  v2     | 01/16/2023 | <li>Volume Shadow Copy (VSS) Recovery is attempted by Default</li><li>Improvements to also recover Favorite URLs to Favorites & Desktop</li><li>Handling for Server SKU to skip the run as there was no impact</li><li>Better handling on non-english language systems</li>| https://aka.ms/ASRAddShortcutsv2 |
 |  v1.1   | 01/15/2023 | <li>Added Volume Shadow Copy (VSS) Recovery switch</li><li>Added telemetry</li> |  https://aka.ms/ASRAddShortcutsV1.1 |
