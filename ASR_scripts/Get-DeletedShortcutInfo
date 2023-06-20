@@ -1,0 +1,67 @@
+# For MDE P1 and Windows E3 customers that do not have access to "Advanced Hunting" (MDE's Kusto Query Language (KQL)).
+# This powershell script will create a list of shortcuts that have been remediated by ASR Rules - “Block Win32 API calls from Office macro” - block mode. 
+
+# What it does?
+# Deploy the Powershell script below to all the clients.
+# Replace line 16 $CsvPath = '\\FileServerName\ShareName\masterfile.csv', with the actual FileServerName, and Sharename.
+# It will go ahead and dump the path/exe information from Event ID 1121, Windows Defender Operational event log and file description and remove duplicates.
+#requires -psedition Desktop
+
+param 
+(
+    $LogName = 'Microsoft-Windows-Windows Defender/Operational',
+    $ProviderName = 'Microsoft-Windows-Windows Defender',
+    $Id = 1121,
+    $Level = 3, #[System.Diagnostics.Eventing.Reader.StandardEventLevel]::Warning
+    $CsvPath = '\\FileServerName\ShareName\masterfile.csv'
+)   
+
+function Get-ShortcutName
+{
+    param
+    (
+        $Path
+    )
+
+    $file = Get-Item -Path $Path
+    $shortcutName = $file.VersionInfo.FileDescription
+    if ($file.Extension -eq 'library.ms')
+    {
+        $shortcutName = $libraryMapper[$file.Name]
+    }
+
+    return $shortcutName
+}
+
+$libraryApp = @{
+    LogName      = $LogName
+    ProviderName = $ProviderName
+    Id           = $Id
+    Level        = $Level 
+}
+
+$libraryMapper = @{    
+    'Camera Roll.library-ms'    = 'Camera Roll'
+    'Documents.library-ms'      = 'Documents'
+    'Music.library-ms'          = 'Music'
+    'Pictures.library-ms'       = 'Pictures'
+    'Saved Pictures.library-ms' = 'Saved Pictures'
+    'Videos.library-ms'         = 'Videos'
+}
+
+$result = [System.Collections.Generic.List[psobject]]::new()
+
+foreach ($e in (Get-WinEvent -FilterHashtable $libraryApp))
+{
+    [xml]$eventAsXml = $e.ToXml()
+    $processPath = $eventAsXml.Event.EventData.Data.Where({ $_.Name -eq 'Path' }).'#text'
+    $targetCommandline = $eventAsXml.Event.EventData.Data.Where({ $_.Name -eq 'Target Commandline' }).'#text'
+    $result.Add([PSCustomObject]@{
+            'Target File'   = $processPath
+            'Shortcut Path' = $targetCommandline
+            'Shortcut Name' = (Get-ShortcutName -Path $processPath)
+        })
+}
+
+Write-Host -MessageData "Exporting to CSV ($CsvPath)"
+$result | Export-Csv -Path $CsvPath -Append -NoTypeInformation
