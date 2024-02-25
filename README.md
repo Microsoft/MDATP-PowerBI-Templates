@@ -1,8 +1,8 @@
 # About
 
-This repo contains sample Power BI Report templates powered by Microsoft Defender Advanced Threat Protection Advance Hunting Queries. With these sample templates, you can start to experience the integration of Advanced hunting into Power BI. For samples of Advance Hunting queries, visit https://github.com/Microsoft/WindowsDefenderATP-Hunting-Queries
+This repo contains sample Power BI Report templates powered by Microsoft Defender Advanced Threat Protection Advance Hunting Queries. With these sample templates, you can start to experience the integration of Advanced hunting into Power BI. For samples of Advance Hunting queries, visit https://github.com/Microsoft/WindowsDefenderATP-Hunting-Queries.
 
-To get started, simply download a template and authenticate to your tenant. For more details on how to authenticate into the Advance Hunting API, visit https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-atp/apis-intro 
+To get started, simply download a template and authenticate to your tenant. For more details on how to authenticate into the Advance Hunting API, visit https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-atp/apis-intro.
 
 When sharing Power BI Report templates, please export the template using this process to export without data: click “File –> Export –> Power BI Template” from the main Power BI Desktop window. A Power BI Report Template contains the definition of the Report (pages, visuals, etc.), Data Model definition (schema, relationships, measures, etc.) and Queries definition (collection of queries, including Query Parameters, etc.). In other words, a Power BI Report template includes pretty much everything that a Report file includes, with the exception of the data itself. For more details, visit https://powerbi.microsoft.com/en-us/blog/deep-dive-into-query-parameters-and-power-bi-templates/.
 
