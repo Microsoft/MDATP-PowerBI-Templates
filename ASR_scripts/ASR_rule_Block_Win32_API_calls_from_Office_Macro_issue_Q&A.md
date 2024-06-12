@@ -103,7 +103,7 @@ DeviceEvents
 DeviceEvents 
 | where Timestamp > datetime(2023-01-13) 
 | where ActionType contains "AsrOfficeMacroWin32ApiCallsBlocked" 
-| where FileName contains endswith ".lnk" 
+| where FileName endswith ".lnk" 
 | extend JSON = parse_json(AdditionalFields) 
 | extend isAudit = tostring(JSON.IsAudit) 
 | where isAudit == "false" 
